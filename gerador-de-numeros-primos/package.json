@@ -1,0 +1,17 @@
+{
+  "name": "prime-generator",
+  "version": "1.0.0",
+  "description": "This project generates prime numbers up to a user specified maximum.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "primes"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node-dev": "^2.0.0"
+  }
+}
