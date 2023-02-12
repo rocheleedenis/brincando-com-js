@@ -1,50 +1,75 @@
-const generatePrimes = function (maxValue: number) {
-    if (maxValue >= 2) { // the only valid case
-        // declarations
-        var s: number = maxValue + 1; // size of case
-        var f: boolean[] = []; // errado
-        var i: number;
+class GeneratePrimes {
+    private size!: number; // not inicialized, but no error!
+    private f: boolean[] = [];
+    private primes: number[] = [];
 
-        // initiate array to true
-        for (i = 0; i < s; i++) {
-            f[i] = true;
+    public generate(maxValue: number) {
+        if (maxValue >= 2) { // the only valid case
+            return this.analise(maxValue);
         }
 
-        // get rid of know non-primes
-        f[0] = f[1] = false;
+        return this.primes;
+    }
 
-        // sieve
-        var j: number;
-        for (i = 2; i < Math.sqrt(s) + 1; i++) {
-            if (f[i]) { // if i is uncrossed, cross its multiples.
-                for (j = 2 * i; j < s; j += i) {
-                    f[j] = false; // multiple is not prime
+    private setSize(maxValue: number) {
+        this.size = maxValue + 1;
+    }
+
+    private analise(maxValue: number) {
+        this.setSize(maxValue);
+        this.initiateEfeWithTrueValues();
+        this.getRidOfKnowNonPrimes();
+        this.sieve();
+
+        this.primes = [this.countPrimeNumbers()];
+
+        this.movePrimesIntoTheResult();
+
+        return this.primes;
+    }
+
+    private initiateEfeWithTrueValues() {
+        for (let i = 0; i < this.size; i++) {
+            this.f[i] = true;
+        }
+    }
+
+    private getRidOfKnowNonPrimes() {
+        this.f[0] = this.f[1] = false;
+    }
+
+    private sieve() {
+        let j: number = 0;
+
+        for (let i = 2; i < Math.sqrt(this.size) + 1; i++) {
+            if (this.f[i]) { // if i is uncrossed, cross its multiples.
+                for (j = 2 * i; j < this.size; j += i) {
+                    this.f[j] = false; // multiple is not prime
                 }
             }
         }
+    }
 
-        // how many primes are there?
+    private countPrimeNumbers() {
         var count: number = 0;
-        for (i = 0; i < s; i++) {
-            if (f[i]) {
+        for (let i = 0; i < this.size; i++) {
+            if (this.f[i]) {
                 count++; // bump count
             }
         }
 
-        var primes: number[] = [count];
+        return count;
+    }
 
-        // move the primes into the result
-        j = 0;
-        for (i = 0; i < s; i++) {
-            if (f[i]) { // if prime
-                primes[j++] = i;
+    private movePrimesIntoTheResult() {
+        let j: number = 0;
+
+        for (let i = 0; i < this.size; i++) {
+            if (this.f[i]) { // if prime
+                this.primes[j++] = i;
             }
         }
-
-        return primes;
-    } else { // maxValue < 2
-        return [];
     }
 }
 
-console.log(generatePrimes(50));
+console.log((new GeneratePrimes()).generate(100));
